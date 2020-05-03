@@ -1,0 +1,8 @@
+Sphinx
+sphinx_theme
+sphinx_rtd_theme
+sphinxcontrib-napoleon
+docutils
+pylint
+autopep8
+matplotlib

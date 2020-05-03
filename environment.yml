@@ -1,0 +1,16 @@
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - cmake>=3.14.0
+  - cudatoolkit>=10.1.0
+  - cudnn
+  - libboost>=1.67
+  - eigen>=3.3.7
+  - glew>=2.1.0
+  - glfw>=3.3.2
+  - numpy>=1.18.1
+  - pytorch>=1.2.0
+
+
