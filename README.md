@@ -84,24 +84,26 @@ Demos:
 
 ## Test using Docker
 
-The docker image `` contains
+The docker image `otaviog/tensorviz:try` contains all dependencies and
+its python can be invoked using the [`tv-try`](tv-try)
+script. Example:
 
 
 ```shell
-tensor-viz$ ./try.py
+tensorviz$ ./tv-try samples/pointcloud.py
 ```
 
 ## Installing
 
-We recommend using conda for installing TensorViz.
+Use conda for installing TensorViz.
 
 ### Install dependencies by environment update (conda)
 
 The `environment.yml` contains the dependencies. Installing command line:
 
 ```shell
-tensor-viz$ conda env update -n <env> --file environment.yml
-tensor-viz$ python setup.py install
+tensorviz$ conda env update -n <env> --file environment.yml
+tensorviz$ python setup.py install
 ```
 
 ## Acknowledgments
