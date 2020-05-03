@@ -106,6 +106,6 @@ tensor-viz$ python setup.py install
 
 ## Acknowledgments
 
-This work was supported by the Eldorado Research
+This work was supported by the [Eldorado Research
 Institute](https://www.eldorado.org.br/) and the [Machine Intelligence
 and Perception Research](https://gitlab.com/mipl).
