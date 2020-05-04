@@ -7,7 +7,7 @@ stages:
   - test
 
 test:
-  state: test
+  stage: test
   script:
     - make -f unit-tests.mk all
     - make -f tasks.mk pylint
