@@ -3,11 +3,11 @@ image: "otaviog/tensorviz:ci"
 before_script:
   - pip install -e .
 
-states:
+stages:
   - test
 
 test:
-  state: test
+  stage: test
   script:
     - make -f unit-tests.mk all
     - make -f tasks.mk pylint
