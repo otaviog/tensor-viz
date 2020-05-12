@@ -33,7 +33,7 @@ cuda_add_library(tenviz
   )
 
 target_include_directories(tenviz
-  PUBLIC  
+  PUBLIC
   $<BUILD_INTERFACE:${EIGEN3_INCLUDE_DIR}>
   $<BUILD_INTERFACE:${IGL_INCLUDE_DIR}>
   $<BUILD_INTERFACE:${GLFW_INCLUDE_DIR}>
@@ -74,8 +74,7 @@ target_compile_definitions(tenviz PUBLIC $<$<BOOL:${MSVC}>:BOOST_ALL_NO_LIB>)
 
 add_library(_ctenviz SHARED _ctenviz.cpp)
 set_property(TARGET _ctenviz PROPERTY CXX_STANDARD 17)
-set_target_properties(_ctenviz PROPERTIES PREFIX "")
-set_target_properties(_ctenviz PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/tenviz)
+
 if (CMAKE_COMPILER_IS_GNUXX)
   target_compile_options(_ctenviz PUBLIC -Wdeprecated-declarations -Wall)
 endif (CMAKE_COMPILER_IS_GNUXX)
@@ -83,4 +82,14 @@ endif (CMAKE_COMPILER_IS_GNUXX)
 target_link_libraries(_ctenviz tenviz)
 target_compile_definitions(_ctenviz PUBLIC $<$<BOOL:${MSVC}>:BOOST_ALL_NO_LIB>)
 
-add_subdirectory(test)
+set_target_properties(_ctenviz PROPERTIES PREFIX "")
+if (SKBUILD)
+  python_extension_module(_ctenviz)
+  install(TARGETS _ctenviz LIBRARY DESTINATION tenviz)
+else (SKBUILD)
+  set_target_properties(_ctenviz PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/tenviz)
+endif (SKBUILD)
+
+if (TENSORVIZ_BUILD_TESTS)
+  add_subdirectory(test)
+endif (TENSORVIZ_BUILD_TESTS)

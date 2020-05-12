@@ -1,6 +1,7 @@
 install_manifest.txt
 doc/build
 doc/source
+doc/cpp
 __MACOSX
 *.*~
 CMakeCache.txt
@@ -26,3 +27,7 @@ dist
 detect_cuda_version.cc
 detect_cuda_compute_capabilities.cpp
 Dockerfile
+_skbuild/
+*.dockerfile
+docker.mk
+.git

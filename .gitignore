@@ -1,4 +1,5 @@
 install_manifest.txt
+_skbuild
 doc/API/
 __MACOSX
 *.*~

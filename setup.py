@@ -1,12 +1,21 @@
-import os
-import re
-import sys
-import platform
-import subprocess
-from setuptools import setup, Extension, find_packages
-from setuptools.command.build_ext import build_ext
-from distutils.version import LooseVersion
+"""Build setup for TensorViz.
+"""
 
+import sys
+import os
+from setuptools import find_packages
+
+try:
+    from skbuild import setup
+except ImportError:
+    print('scikit-build is required to build from source.', file=sys.stderr)
+    print('Please run:', file=sys.stderr)
+    print('', file=sys.stderr)
+    print('  python -m pip install scikit-build')
+    sys.exit(1)
+
+import torch
+torch_root = os.path.dirname(torch.__file__)    
 
 def _forbid_publish():
     argv = sys.argv
@@ -23,66 +32,6 @@ def _forbid_publish():
 _forbid_publish()
 
 
-class CMakeExtension(Extension):
-    def __init__(self, name, sourcedir=''):
-        Extension.__init__(self, name, sources=[])
-        self.sourcedir = os.path.abspath(sourcedir)
-
-
-class CMakeBuild(build_ext):
-    def run(self):
-        try:
-            out = subprocess.check_output(['cmake', '--version'])
-        except OSError:
-            raise RuntimeError("CMake must be installed to build the following extensions: " +
-                               ", ".join(e.name for e in self.extensions))
-
-        if platform.system() == "Windows":
-            cmake_version = LooseVersion(
-                re.search(r'version\s*([\d.]+)', out.decode()).group(1))
-            if cmake_version < '3.1.0':
-                raise RuntimeError("CMake >= 3.1.0 is required on Windows")
-
-        for ext in self.extensions:
-            self.build_extension(ext)
-
-    def build_extension(self, ext):
-        extdir = os.path.abspath(os.path.dirname(
-            self.get_ext_fullpath(ext.name)))
-
-        #############
-        # Alert: the next line may be a issue for building other libraries
-        #############
-
-        cmake_args = ['-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir,
-                      '-DPYTHON_EXECUTABLE=' + sys.executable,
-                      '-DBUILD_TESTS=OFF']
-
-        self.debug = True # comment this
-        cfg = 'Debug' if self.debug else 'Release'
-        build_args = ['--config', cfg]
-
-        if platform.system() == "Windows":
-            cmake_args += [
-                '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY_{}={}'.format(cfg.upper(), extdir)]
-            if sys.maxsize > 2**32:
-                cmake_args += ['-A', 'x64']
-            build_args += ['--', '/m']
-        else:
-            cmake_args += ['-DCMAKE_BUILD_TYPE=' + cfg]
-            build_args += ['--', '-j2']
-
-        env = os.environ.copy()
-        env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(env.get('CXXFLAGS', ''),
-                                                              self.distribution.get_version())
-        if not os.path.exists(self.build_temp):
-            os.makedirs(self.build_temp)
-        subprocess.check_call(['cmake', ext.sourcedir] +
-                              cmake_args, cwd=self.build_temp, env=env)
-        subprocess.check_call(['cmake', '--build', '.'] +
-                              build_args, cwd=self.build_temp)
-
-
 REQUIREMENTS = [
     'numpy', 'numpy-stl', 'torch', 'pillow'
 ]
@@ -91,14 +40,14 @@ setup(
     name='TensorViz',
     version='0.0.1',
     author='Otavio Gomes',
-    author_email='otavio.b.gomes@gmail.com',
+    author_email='otavio.gomes@eldorado.org.br',
     zip_safe=False,
     description='OpenGL+PyTorch',
     packages=find_packages(exclude=['*._test']),
     install_requires=REQUIREMENTS,
     long_description='',
-    ext_modules=[CMakeExtension('_ctenviz')],
-    cmdclass=dict(build_ext=CMakeBuild),
     include_package_data=True,
-    package_data={'tenviz': ['*.so', 'shaders/*.vert', 'shaders/*.frag', 'shaders/*.geo']}
-)
+    package_data={'tenviz':
+                  ['shaders/*.vert',
+                   'shaders/*.frag',
+                   'shaders/*.geo']})

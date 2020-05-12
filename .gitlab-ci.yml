@@ -1,7 +1,7 @@
 image: "otaviog/tensorviz:ci"
 
 before_script:
-  - pip install .
+  - pip install -e .
 
 states:
   - test

@@ -5,7 +5,7 @@ try-1-build:
 	docker build -t tensorviz:try -f try.dockerfile .
 
 try-2-shell:
-	docker run -it tensorviz:try /bin/bash
+	docker run --gpus all -it tensorviz:try /bin/bash
 
 try-3-tag:
 	docker tag tensorviz:try otaviog/tensorviz:try

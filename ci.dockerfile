@@ -2,6 +2,7 @@ FROM nvidia/cudagl:10.2-devel-ubuntu18.04
 MAINTAINER otaviog
 
 RUN apt update && apt -yq install python3 aria2 git
+ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display
 
 RUN aria2c https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN bash Miniconda3-latest-Linux-x86_64.sh -b
