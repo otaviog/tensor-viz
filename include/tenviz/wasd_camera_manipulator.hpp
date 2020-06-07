@@ -22,9 +22,11 @@ class WASDCameraManipulator : public ICameraManipulator {
   Eigen::Matrix4f GetProjectionMatrix(int width, int height,
                                       const Bounds &bounds) override;
 
-  void KeyState(GLFWwindow *window, float time, const Bounds &bounds) override;
+  void KeyState(const std::map<int, bool> &keymap, double time,
+                const Bounds &bounds) override;
 
-  void KeyPressed(GLFWwindow *window, int glfw_key) override {}
+  void KeyPressed(GLFWwindow *window, int glfw_key, double elapsed_time,
+                  const Bounds &bounds) override { }
 
   void CursorMoved(GLFWwindow *window, double xpos, double ypos) override;
 

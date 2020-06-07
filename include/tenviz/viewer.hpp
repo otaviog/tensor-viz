@@ -93,10 +93,12 @@ class Viewer {
   std::string title_;
   bool first_view_;
   int last_key_;
-
+  double elapsed_;
+  std::map<int, bool> pressed_key_map_;
+  
   std::shared_ptr<ICameraManipulator> camera_manip_;
   std::pair<bool, Projection> user_projection_;
-
+  
   TimeMeasurer frame_tick_;
 
   friend void KeyCallback(GLFWwindow *, int, int, int, int);

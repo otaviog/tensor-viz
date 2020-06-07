@@ -16,58 +16,70 @@ using namespace std;
 using namespace Eigen;
 
 namespace tenviz {
+
 namespace {
 const int NO_LAST_KEY = std::numeric_limits<int>::min();
-}  // namespace
-void KeyCallback(GLFWwindow* window, int key, int scancode, int action,
-                 int mods) {
-  Viewer* self = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
-  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-    glfwSetWindowShouldClose(window, 1);
-    return;
-  }
-  if (action == GLFW_PRESS) {
-    self->camera_manip_->KeyPressed(window, key);
-    self->last_key_ = key;
 
-    if (mods == GLFW_MOD_CONTROL) {
-      if (key == GLFW_KEY_C) {
-        const Eigen::Matrix4f mtx = self->camera_manip_->GetViewMatrix();
-        std::ostringstream buffer;
+void HandleCtrlC(GLFWwindow* window,
+                 std::shared_ptr<ICameraManipulator> camera_manip) {
+  const Eigen::Matrix4f mtx = camera_manip->GetViewMatrix();
+  std::ostringstream buffer;
 
-        // clang-format off
+  // clang-format off
         buffer
             << "[[ " << mtx(0, 0) << " , " << mtx(0, 1) << " , " << mtx(0, 2) << " , " << mtx(0, 3) << " ]," << std::endl
             << "[ " << mtx(1, 0) << " , " << mtx(1, 1) << " , " << mtx(1, 2) << " , " << mtx(1, 3) << " ]," << std::endl
             << "[ " << mtx(2, 0) << " , " << mtx(2, 1) << " , " << mtx(2, 2) << " , " << mtx(2, 3) << " ]," << std::endl
             << "[ " << mtx(3, 0) << " , " << mtx(3, 1) << " , " << mtx(3, 2) << " , " << mtx(3, 3) << " ]]" << std::endl;
-        // clang-format on
-        glfwSetClipboardString(self->window_.handle, buffer.str().c_str());
+  // clang-format on
+  glfwSetClipboardString(window, buffer.str().c_str());
+}
+
+void HandleCtrlV(GLFWwindow* window,
+                 std::shared_ptr<ICameraManipulator> camera_manip) {
+  const char* c_state = glfwGetClipboardString(window);
+  if (c_state) {
+    std::istringstream buffer_stream(c_state);
+    Eigen::Matrix4f mtx;
+
+    for (int i = 0; i < 4; ++i) {
+      std::string line;
+      std::getline(buffer_stream, line);
+
+      std::istringstream line_stream(line);
+      line_stream.ignore(std::numeric_limits<std::streamsize>::max(), ' ');
+      for (int j = 0; j < 4; ++j) {
+        std::string temp;
+        line_stream >> mtx(i, j);
+        line_stream.ignore(std::numeric_limits<std::streamsize>::max(), ' ');
+        line_stream.ignore(std::numeric_limits<std::streamsize>::max(), ' ');
+      }
+    }
+
+    camera_manip->SetViewMatrix(mtx);
+  }
+}
+}  // namespace
+
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action,
+                 int mods) {
+  Viewer* self = static_cast<Viewer*>(glfwGetWindowUserPointer(window));
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+    glfwSetWindowShouldClose(window, 1);
+    return;
+  }
+  if (action == GLFW_PRESS) {
+    self->camera_manip_->KeyPressed(window, key, self->elapsed_,
+                                    self->scene_->GetBounds());
+    self->last_key_ = key;
+    self->pressed_key_map_[key] = true;
+  } else if (action == GLFW_RELEASE) {
+    self->pressed_key_map_[key] = false;
+    if (mods == GLFW_MOD_CONTROL) {
+      if (key == GLFW_KEY_C) {
+        HandleCtrlC(window, self->camera_manip_);
       } else if (key == GLFW_KEY_V) {
-        const char* c_state = glfwGetClipboardString(self->window_.handle);
-        if (c_state) {
-          std::istringstream buffer_stream(c_state);
-          Eigen::Matrix4f mtx;
-
-          for (int i = 0; i < 4; ++i) {
-            std::string line;
-            std::getline(buffer_stream, line);
-
-            std::istringstream line_stream(line);
-            line_stream.ignore(std::numeric_limits<std::streamsize>::max(),
-                               ' ');
-            for (int j = 0; j < 4; ++j) {
-              std::string temp;
-              line_stream >> mtx(i, j);
-              line_stream.ignore(std::numeric_limits<std::streamsize>::max(),
-                                 ' ');
-              line_stream.ignore(std::numeric_limits<std::streamsize>::max(),
-                                 ' ');
-            }
-          }
-
-          self->camera_manip_->SetViewMatrix(mtx);
-        }
+        HandleCtrlV(window, self->camera_manip_);
       }
     }
   }
@@ -202,8 +214,8 @@ bool Viewer::Draw(int swap_interval) {
 
   glfwPollEvents();
 
-  const double elapsed = frame_tick_.Tick();
-  camera_manip_->KeyState(window_.handle, elapsed, scene_->GetBounds());
+  elapsed_ = frame_tick_.Tick();
+  camera_manip_->KeyState(pressed_key_map_, elapsed_, scene_->GetBounds());
 
   return !glfwWindowShouldClose(window_.handle);
 }

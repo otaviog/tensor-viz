@@ -65,7 +65,9 @@ Eigen::Matrix4f TrackballCameraManipulator::GetProjectionMatrix(
   return proj.GetMatrix();
 }
 
-void TrackballCameraManipulator::KeyPressed(GLFWwindow* window, int key) {
+void TrackballCameraManipulator::KeyPressed(GLFWwindow* window, int key,
+                                            double elapsed_time,
+                                            const Bounds& bounds) {
   float incr = 5.0;
   switch (key) {
     case GLFW_KEY_W:

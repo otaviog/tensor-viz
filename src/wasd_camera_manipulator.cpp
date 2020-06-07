@@ -42,17 +42,31 @@ Eigen::Matrix4f WASDCameraManipulator::GetProjectionMatrix(
   return proj.GetMatrix();
 }
 
-void WASDCameraManipulator::KeyState(GLFWwindow *window, float elap_secs,
-                                     const Bounds &bounds) {
+void WASDCameraManipulator::KeyState(const map<int, bool> &keymap,
+                                     double elap_secs, const Bounds &bounds) {
   const float move_incr =
       velocity_ * bounds.get_sphere().get_radius() * 2 * elap_secs;
-  if (glfwGetKey(window, GLFW_KEY_W)) {
+  auto is_key_pressed = [&](int key) {
+    const auto iter = keymap.find(key);
+    if (iter != keymap.end()) {
+      return iter->second;
+    }
+    return false;
+  };
+
+  if (is_key_pressed(GLFW_KEY_W)) {
     camera_.Forward(move_incr);
-  } else if (glfwGetKey(window, GLFW_KEY_A)) {
+  }
+
+  if (is_key_pressed(GLFW_KEY_A)) {
     camera_.Strife(-move_incr);
-  } else if (glfwGetKey(window, GLFW_KEY_S)) {
+  }
+
+  if (is_key_pressed(GLFW_KEY_S)) {
     camera_.Forward(-move_incr);
-  } else if (glfwGetKey(window, GLFW_KEY_D)) {
+  }
+
+  if (is_key_pressed(GLFW_KEY_D)) {
     camera_.Strife(move_incr);
   }
 }

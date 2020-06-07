@@ -22,9 +22,11 @@ class TrackballCameraManipulator : public ICameraManipulator {
   Eigen::Matrix4f GetProjectionMatrix(int screen_width, int screen_height,
                                       const Bounds& bounds) override;
 
-  void KeyState(GLFWwindow* window, float fps, const Bounds& bounds) override {}
+  void KeyState(const std::map<int, bool> &keymap, double elapsed_time,
+                const Bounds& bounds) override {}
 
-  void KeyPressed(GLFWwindow* window, int glfw_key) override;
+  void KeyPressed(GLFWwindow* window, int glfw_key, double elapsed_time,
+                  const Bounds& bounds) override;
 
   void CursorMoved(GLFWwindow* window, double xpos, double ypos) override;
 

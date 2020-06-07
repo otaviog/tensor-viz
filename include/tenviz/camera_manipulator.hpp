@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <string>
 
 #include <GLFW/glfw3.h>
@@ -12,9 +13,8 @@ namespace tenviz {
  * Existing manipulators on TensorViz
  */
 enum CameraManipulator {
-  kWASD /**<Classic WASD+Mouse strife camera of
-           games.*/
-  ,
+  kWASD,     /**<Classic WASD+Mouse strife camera of
+               games.*/
   kTrackBall /**< Mouse Trackbal camera.*/
 };
 
@@ -58,11 +58,12 @@ class ICameraManipulator {
   /**
    * Handle GLFW key state.
    *
-   * @param window The rendering window.
+   * @param keymap Map with current pressed keys. Never pressed key
+   * are not inserted in the map.
    * @param elapsed Elapsed seconds since the last swap buffers.
    * @param bounds The scene boundary.
    */
-  virtual void KeyState(GLFWwindow* window, float elapsed,
+  virtual void KeyState(const std::map<int, bool>& keymap, double elapsed_time,
                         const Bounds& bounds) = 0;
 
   /**
@@ -70,8 +71,12 @@ class ICameraManipulator {
    *
    * @param window The rendering window.
    * @param glfw_key The key code.
+   * @param elapsed_time Elapsed time in seconds between the last
+   * frame.
+   * @param bounds Scene's boundaries.
    */
-  virtual void KeyPressed(GLFWwindow* window, int glfw_key) = 0;
+  virtual void KeyPressed(GLFWwindow* window, int glfw_key, double elapsed_time,
+                          const Bounds& bounds) = 0;
 
   /**
    * Handle GLFW mouse moved
