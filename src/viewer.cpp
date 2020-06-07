@@ -68,7 +68,8 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action,
     glfwSetWindowShouldClose(window, 1);
     return;
   }
-  if (action == GLFW_PRESS) {
+
+  if (action == GLFW_PRESS && mods == 0) {
     self->camera_manip_->KeyPressed(window, key, self->elapsed_,
                                     self->scene_->GetBounds());
     self->last_key_ = key;
