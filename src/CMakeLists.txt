@@ -54,7 +54,8 @@ target_link_libraries(tenviz
   ${GLEW_LIBRARIES}
   ${PYTHON_LIBRARY}
   ${OS_LIBRARIES}
-  "${TORCH_LIBRARIES}")
+  "${TORCH_LIBRARIES}"
+  "${TORCH_PYTHON_LIBRARY}")
 
  if (MSVC)
 	target_compile_options(tenviz PRIVATE /bigobj)

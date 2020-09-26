@@ -69,13 +69,16 @@ void KeyCallback(GLFWwindow* window, int key, int scancode, int action,
     return;
   }
 
-  if (action == GLFW_PRESS && mods == 0) {
-    self->camera_manip_->KeyPressed(window, key, self->elapsed_,
-                                    self->scene_->GetBounds());
-    self->last_key_ = key;
+  if (action == GLFW_PRESS) {
     self->pressed_key_map_[key] = true;
+    if (mods == 0) {
+      self->camera_manip_->KeyPressed(window, key, self->elapsed_,
+                                      self->scene_->GetBounds());
+      self->last_key_ = key;
+    }
   } else if (action == GLFW_RELEASE) {
     self->pressed_key_map_[key] = false;
+
     if (mods == GLFW_MOD_CONTROL) {
       if (key == GLFW_KEY_C) {
         HandleCtrlC(window, self->camera_manip_);

@@ -2,7 +2,6 @@
 """
 
 import sys
-import os
 from setuptools import find_packages
 
 try:
@@ -13,9 +12,6 @@ except ImportError:
     print('', file=sys.stderr)
     print('  python -m pip install scikit-build')
     sys.exit(1)
-
-import torch
-torch_root = os.path.dirname(torch.__file__)    
 
 def _forbid_publish():
     argv = sys.argv
@@ -38,14 +34,21 @@ REQUIREMENTS = [
 
 setup(
     name='TensorViz',
-    version='0.0.1',
+    version='1.0.0',
     author='Otavio Gomes',
-    author_email='otavio.gomes@eldorado.org.br',
+    author_email='otavio.b.gomes@gmail.com',
     zip_safe=False,
     description='OpenGL+PyTorch',
+    url='https://gitlab.com/mipl/3d-reconstruction/tensorviz',
+    license='MIT',
+    classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.5'
+    ],
     packages=find_packages(exclude=['*._test']),
     install_requires=REQUIREMENTS,
-    long_description='',
     include_package_data=True,
     package_data={'tenviz':
                   ['shaders/*.vert',
