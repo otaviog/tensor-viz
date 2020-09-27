@@ -313,15 +313,20 @@ void GLShaderProgram::SetUniform(const string &name,
       throw Error("Only float32 tensors can set matrix uniforms");
     }
 
+    auto strides = tensor.strides();
+    // OpenGL matrices are ordered column-wise in memory.      
+    GLenum transpose = GL_TRUE;
+    if (strides[0] < strides[1])
+      transpose = GL_FALSE;
+
     if (rows == 4 && cols == 4) {
-      // OpenGL matrices are ordered column-wise in memory.
-      glUniformMatrix4fv(location, 1, GL_TRUE, tensor.data_ptr<float>());
+      glUniformMatrix4fv(location, 1, transpose, tensor.data_ptr<float>());
       GLCheckError();
     } else if (rows == 3 && cols == 3) {
-      glUniformMatrix3fv(location, 1, GL_TRUE, tensor.data_ptr<float>());
+      glUniformMatrix3fv(location, 1, transpose, tensor.data_ptr<float>());
       GLCheckError();
     } else if (rows == 2 && cols == 2) {
-      glUniformMatrix2fv(location, 1, GL_TRUE, tensor.data_ptr<float>());
+      glUniformMatrix2fv(location, 1, transpose, tensor.data_ptr<float>());
       GLCheckError();
     } else {
       throw Error(

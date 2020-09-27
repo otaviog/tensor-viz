@@ -6,6 +6,9 @@ from ._ctenviz import (Context as _Context, CameraManipulator, Scene)
 
 
 def _asure_scene(scene):
+    if scene is None:
+        RuntimeError("Scene is None")
+
     if isinstance(scene, list):
         scene_inst = Scene()
         for node in scene:
