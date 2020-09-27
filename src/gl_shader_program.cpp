@@ -280,7 +280,7 @@ void GLShaderProgram::SetUniform(const string &name,
             "Only float32 or int32 tensors can set scalar or vector uniforms");
     }
 
-    AT_DISPATCH_ALL_TYPES(tensor.type(), "Uniform", ([&] {
+    AT_DISPATCH_ALL_TYPES(tensor.scalar_type(), "Uniform", ([&] {
                             const auto accessor =
                                 tensor.accessor<scalar_t, 1>();
                             switch (tensor.size(0)) {
