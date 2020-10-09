@@ -19,7 +19,15 @@ void BSphere::RegisterPybind(pybind11::module &m) {
 }
 
 BSphere BSphere::Transform(const Eigen::Affine3f &transform) const {
-  return BSphere(transform * center_, radius_);
+  const auto matrix = transform.matrix();
+  const Eigen::Vector3f col0(matrix(0, 0), matrix(1, 0), matrix(2, 0));
+  const Eigen::Vector3f col1(matrix(0, 1), matrix(1, 1), matrix(2, 1));
+  const Eigen::Vector3f col2(matrix(0, 2), matrix(1, 2), matrix(2, 2));
+
+  return BSphere(
+      transform * center_,
+      radius_ * std::sqrt(
+          std::max(col0.squaredNorm(), std::max(col1.squaredNorm(), col2.squaredNorm()))));
 }
 
 void BSphere::Add(const Eigen::Vector3f &point) {
