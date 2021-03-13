@@ -22,6 +22,9 @@ class Scene(_Scene):
         if nodes is not None:
             for node in nodes:
                 self.add(node)
+            self.nodes = nodes
+        else:
+            self.nodes = []
 
 
 def create_mesh(verts, faces, normals=None, calc_normals=False, texcoords=None):
@@ -253,16 +256,16 @@ def create_virtual_camera(proj, extrinsic, color=None, show_axis=True,
     return Scene(scene)
 
 
-def create_axis_grid(start, end, step_size, show_axis=True):
+def create_axis_grid(start, end, steps, show_axis=True, grid_color=None):
     """Creates an axis grid on the X-Z plane.
 
     Args:
 
-        start (float): XZ starting coordinate.
+        start (float): Starting coordinate on the XZ plane.
 
-        end (end): XZ ending coordinate.
+        end (float): Ending coordinate on the XZ plane.
 
-        step_size (int): How many lines.
+        steps (int): How many lines.
 
         show_axis (bool): Show an axis on the origin.
 
@@ -273,7 +276,12 @@ def create_axis_grid(start, end, step_size, show_axis=True):
     # pylint: disable=invalid-name
 
     space = torch.linspace(float(start), float(
-        end), int(step_size), dtype=torch.float)
+        end), int(steps), dtype=torch.float)
+
+    if space.nelement() == 0:
+        raise RuntimeError(
+            "Empty points grid. "
+            "Please review the start, end and steps parameters.")
 
     zs, xs = torch.meshgrid(space, space)
     ys = torch.zeros_like(xs)
@@ -295,16 +303,19 @@ def create_axis_grid(start, end, step_size, show_axis=True):
                        _SHADER_DIR / "default.frag")
 
     draw['in_position'] = xz_grid
-    draw['Color'] = torch.tensor([1.0, 1.0, 1.0])
+    if grid_color is None:
+        grid_color = torch.tensor([1.0, 1.0, 1.0])
+    draw['Color'] = grid_color.float()
     draw['ProjModelview'] = MatPlaceholder.ProjectionModelview
 
     draw.indices.from_tensor(indices)
+
     draw.set_bounds(xz_grid.view(-1, 3))
     draw.style.polygon_mode = PolygonMode.Wireframe
 
     scene = [draw]
     if show_axis:
-        axis_size = (end - start)/step_size
+        axis_size = (end - start)/steps
         axis = create_quiver(torch.zeros(3, 3),
                              torch.tensor([[1.0, 0.0, 0.0],
                                            [0.0, 1.0, 0.0],

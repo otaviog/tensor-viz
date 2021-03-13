@@ -105,8 +105,8 @@ class Projection:
             :obj:`Projection`: Projection parameters.
 
         """
-        right = (near*kcam[0, 2])/kcam[0, 0]
-        top = (near*kcam[1, 2])/abs(kcam[1, 1])
+        right = (near*kcam[0, 2].item())/kcam[0, 0].item()
+        top = (near*kcam[1, 2].item())/abs(kcam[1, 1].item())
 
         return cls(-right, right, -top, top, near, far)
 
@@ -179,7 +179,12 @@ class Projection:
         return mtx
 
     def __str__(self):
-        return str(self.__dict__)
+        return str(("Projection(left={}, right={}, bottom={}, top={}, near={}, far={}, "
+                    "far_left={}, far_right={}, far_top={}, far_bottom={}, "
+                    "fov_x={}, fov_y={}, aspect={})").format(
+                        self.left, self.right, self.bottom, self.top, self.near, self.far,
+                        self.far_left, self.far_right, self.far_top, self.far_bottom,
+                        self.fov_x, self.fov_y, self.aspect))
 
     def __repr__(self):
         return str(self)

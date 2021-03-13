@@ -51,5 +51,6 @@ class Style {
   float line_width;         /**Line width for wireframe rendering.*/
   float point_size;         /**Point size for point rendering.*/
   PolygonMode polygon_mode; /**Polygon rendering mode.*/
+  bool alpha_blending;
 };
 };  // namespace tenviz

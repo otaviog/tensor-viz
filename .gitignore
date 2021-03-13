@@ -47,3 +47,4 @@ test_tensorviz_cpp
 *.pyd
 *.ilk
 *.ipynb_checkpoints
+.clangd

@@ -117,6 +117,7 @@ SharedWindow::SharedWindow(GLFWwindow* window, std::mutex* lock) {
 void SharedWindow::Release() {
   if (handle != nullptr && !is_shared()) {
     MakeCurrent();
+    glfwSetWindowShouldClose(handle, 1);
     glfwDestroyWindow(handle);
     DetachCurrent();
     handle = nullptr;
