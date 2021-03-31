@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+
 namespace tenviz {
 template <typename Type>
 

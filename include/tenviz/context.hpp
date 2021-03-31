@@ -4,6 +4,7 @@
 #include <mutex>
 #include <set>
 
+#include <torch/csrc/utils/pybind.h>
 #include "eigen_common.hpp"
 #include "gl_common.hpp"
 
@@ -12,9 +13,6 @@
 
 class GLFWwindow;
 
-namespace pybind11 {
-class module;
-}
 
 namespace tenviz {
 

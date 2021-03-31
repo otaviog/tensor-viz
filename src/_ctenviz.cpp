@@ -5,7 +5,6 @@
 #include <pybind11/eigen.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
-#include <torch/csrc/utils/pybind.h>
 #include <torch/python.h>
 #include <torch/torch.h>
 

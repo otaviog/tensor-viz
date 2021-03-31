@@ -4,9 +4,7 @@
 #include <sstream>
 #include <string>
 
-namespace pybind11 {
-class module;
-}
+#include <torch/csrc/utils/pybind.h>
 
 namespace tenviz {
 

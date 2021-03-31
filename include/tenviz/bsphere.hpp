@@ -1,11 +1,9 @@
 #pragma once
 
 #include <torch/torch.h>
+#include <torch/csrc/utils/pybind.h>
 #include "eigen_common.hpp"
 
-namespace pybind11 {
-class module;
-}
 
 namespace tenviz {
 /**

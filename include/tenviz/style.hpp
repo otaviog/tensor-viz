@@ -1,10 +1,7 @@
 #pragma once
 
+#include <torch/csrc/utils/pybind.h>
 #include "gl_common.hpp"
-
-namespace pybind11 {
-class module;
-}
 
 namespace tenviz {
 

@@ -1,13 +1,10 @@
 #pragma once
 
 #include <torch/torch.h>
+#include <torch/csrc/utils/pybind.h>
 
 #include "bbox.hpp"
 #include "bsphere.hpp"
-
-namespace pybind11 {
-class module;
-}
 
 namespace tenviz {
 
