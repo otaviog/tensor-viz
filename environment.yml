@@ -4,16 +4,16 @@ channels:
   - defaults
 dependencies:
   - cmake>=3.14.0
-  - cudatoolkit>=10.1
+  - cudnn>=7.0.0
   - libboost>=1.67
   - eigen>=3.3.7
   - glew>=2.1.0
   - glfw>=3.3.2
-  - numpy>=1.18.1
-  - pytorch>=1.4.0
-  - pip>=19.3.1
   - ninja>=1.10.0
+  - numpy>=1.18.1
+  - numpy-stl>=2.16.0
+  - pytorch>=1.4.0
+  - Pillow>=8.0.0
+  - pip>=19.3.1
   - pip:
       - scikit-build
-
-

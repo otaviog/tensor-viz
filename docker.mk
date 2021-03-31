@@ -1,31 +1,24 @@
 all:
-	@echo Prepares CI docker image
+	@echo Docker image tasks
 
-try-1-build:
-	docker build -t tensorviz:try -f try.dockerfile .
+dev-build:
+	docker build --target base -t otaviog/tensorviz:base .
+	docker build -t otaviog/tensorviz:dev -f development.dockerfile .
 
-try-2-shell:
-	docker run --gpus all -it tensorviz:try /bin/bash
+dev-start:
+	docker run --gpus all --user=`id -u`:`id -g` --env="DISPLAY"\
+		-e NVIDIA_DRIVER_CAPABILITIES=all\
+		-e XAUTHORITY\
+		--volume="/etc/group:/etc/group:ro"\
+		--volume="/etc/passwd:/etc/passwd:ro"\
+		--volume="/etc/shadow:/etc/shadow:ro"\
+		--volume="/etc/sudoers.d:/etc/sudoers.d:ro"\
+		--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw"\
+		--volume=`pwd`:/workspaces/tensorviz\
+		-it otaviog/tensorviz:dev /bin/bash
 
-try-3-tag:
-	docker tag tensorviz:try otaviog/tensorviz:try
+try-build:
+	docker build --target try -t otaviog/tensorviz:try .
 
-try-4-push:
+try-push:
 	docker push otaviog/tensorviz:try
-
-# Continouous integration
-
-ci-1-build:
-	docker build -t tensorviz:ci -f ci.dockerfile .
-
-ci-2-tag:
-	docker tag tensorviz:ci otaviog/tensorviz:ci
-
-ci-3-shell:
-	docker run -it otaviog/tensorviz:ci /bin/bash
-
-ci-4-push:
-	docker push otaviog/tensorviz:ci
-
-ci-5-pull:
-	docker pull otaviog/tensorviz:ci
