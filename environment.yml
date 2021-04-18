@@ -10,7 +10,7 @@ dependencies:
   - glew>=2.1.0
   - glfw>=3.3.2
   - ninja>=1.10.0
-  - numpy>=1.18.1
+  - numpy>=1.19.0
   - numpy-stl>=2.16.0
   - pytorch>=1.4.0
   - Pillow>=8.0.0

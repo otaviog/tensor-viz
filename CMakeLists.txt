@@ -9,9 +9,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+find_package(CUDA)
 ###############
 # Find PyTorch
-
 
 find_package(PythonInterp 3 REQUIRED)
 execute_process(

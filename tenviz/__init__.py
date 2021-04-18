@@ -18,4 +18,4 @@ from .texture import tex_from_tensor, tex_empty
 from .framebuffer import create_framebuffer
 from ._ctenviz import (PolygonMode, CameraManipulator, MatPlaceholder,
                        DrawMode, BufferTarget, BufferUsage, DType,
-                       FramebufferTarget, TexTarget, Scene, Error)
+                       FramebufferTarget, TexTarget, Error)
