@@ -8,10 +8,17 @@ namespace tenviz {
 /**
  * Mode for rendering polygon geometry.
  */
-enum PolygonMode {
+enum class PolygonMode {
   kFill = GL_FILL,      /**< Filled polygons. */
   kWireframe = GL_LINE, /**< Draw edges only. */
   kPoint = GL_POINT     /**<Draw vertices only*/
+};
+
+enum class PolygonOffsetMode {
+  kNone = 0,
+  kFill = GL_POLYGON_OFFSET_FILL,
+  kLine = GL_POLYGON_OFFSET_LINE,
+  kPoint = GL_POLYGON_OFFSET_POINT
 };
 
 /**
@@ -49,5 +56,9 @@ class Style {
   float point_size;         /**Point size for point rendering.*/
   PolygonMode polygon_mode; /**Polygon rendering mode.*/
   bool alpha_blending;
+
+  PolygonOffsetMode polygon_offset_mode;
+  float polygon_offset_factor;
+  float polygon_offset_units;
 };
 };  // namespace tenviz
