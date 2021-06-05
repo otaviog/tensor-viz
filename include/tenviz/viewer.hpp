@@ -77,9 +77,12 @@ class Viewer {
 
   std::shared_ptr<Scene> get_scene() { return scene_; }
 
+  Context* get_context() { return orig_context_; }
+
   int get_width() const { return width_; }
 
   int get_height() const { return height_; }
+
 
  private:
   void UpdateSize(int width, int height);

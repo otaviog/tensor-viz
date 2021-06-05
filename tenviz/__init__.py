@@ -16,6 +16,7 @@ from .projection import Projection
 from .buffer import buffer_from_tensor, buffer_empty
 from .texture import tex_from_tensor, tex_empty
 from .framebuffer import create_framebuffer
-from ._ctenviz import (PolygonMode, CameraManipulator, MatPlaceholder,
-                       DrawMode, BufferTarget, BufferUsage, DType,
-                       FramebufferTarget, TexTarget, Error)
+from .viewer import take_screenshot
+from ._ctenviz import (PolygonMode, PolygonOffsetMode, CameraManipulator,
+                       MatPlaceholder, DrawMode, BufferTarget, BufferUsage,
+                       DType, FramebufferTarget, TexTarget, Error)

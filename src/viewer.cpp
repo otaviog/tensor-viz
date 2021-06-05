@@ -262,6 +262,7 @@ void Viewer::RegisterPybind(pybind11::module& m) {
       .def("wait_key", &Viewer::WaitKey)
       .def("release", &Viewer::Release)
       .def("get_scene", &Viewer::get_scene)
+      .def_property("context", &Viewer::get_context, nullptr)
       .def_property("title", &Viewer::get_title, &Viewer::SetTitle)
       .def("set_projection", &Viewer::py_set_projection)
       .def_property("projection_matrix", &Viewer::GetProjectionMatrix, nullptr)
