@@ -14,6 +14,7 @@ void DrawProgram::RegisterPybind(
     py::module &m, pybind11::class_<ANode, std::shared_ptr<ANode>> &anode) {
   py::enum_<DrawMode>(m, "DrawMode")
       .value("Triangles", DrawMode::kTriangles)
+      .value("TriangleStrip", DrawMode::kTrianglesStrip)
       .value("Quads", DrawMode::kQuads)
       .value("Points", DrawMode::kPoints)
       .value("Lines", DrawMode::kLines)

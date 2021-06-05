@@ -23,6 +23,7 @@ enum MatPlaceholder {
 enum DrawMode {
   kQuads = GL_QUADS,
   kTriangles = GL_TRIANGLES,
+  kTrianglesStrip = GL_TRIANGLE_STRIP,
   kLines = GL_LINES,
   kPoints = GL_POINTS
 };
