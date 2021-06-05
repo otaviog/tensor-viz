@@ -26,6 +26,21 @@ class Scene(_Scene):
         else:
             self.nodes = []
 
+    def __len__(self):
+        return len(self.nodes)
+
+    def __getitem__(self, idx):
+        return self.nodes[idx]
+
+    def __iter__(self):
+        return iter(self.nodes)
+
+    def __str__(self):
+        return f"Scene({self.nodes})"
+
+    def __repr__(self):
+        return str(self)
+
 
 def create_mesh(verts, faces, normals=None, calc_normals=False, texcoords=None):
     """
