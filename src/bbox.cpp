@@ -38,6 +38,34 @@ BBox3D BBox3D::Union(const BBox3D &rhs) const {
 }
 
 BBox3D BBox3D::Transform(const Eigen::Affine3f &transform) const {
-  return BBox3D(transform * min_pt_, transform * max_pt_);
+  const Eigen::Vector3f points[8] = {
+      // Lower
+      Eigen::Vector3f(min_pt_[0], min_pt_[1], min_pt_[2]),
+      Eigen::Vector3f(min_pt_[0], min_pt_[1], max_pt_[2]),
+      Eigen::Vector3f(max_pt_[0], min_pt_[1], max_pt_[2]),
+      Eigen::Vector3f(max_pt_[0], min_pt_[1], min_pt_[2]),
+      // Upper
+      Eigen::Vector3f(min_pt_[0], max_pt_[1], min_pt_[2]),
+      Eigen::Vector3f(min_pt_[0], max_pt_[1], max_pt_[2]),
+      Eigen::Vector3f(max_pt_[0], max_pt_[1], max_pt_[2]),
+      Eigen::Vector3f(max_pt_[0], max_pt_[1], min_pt_[2]),
+  };
+
+  Eigen::Vector3f new_min(std::numeric_limits<float>::infinity(),
+                          std::numeric_limits<float>::infinity(),
+                          std::numeric_limits<float>::infinity());
+  Eigen::Vector3f new_max(-std::numeric_limits<float>::infinity(),
+                          -std::numeric_limits<float>::infinity(),
+                          -std::numeric_limits<float>::infinity());
+
+  for (int k = 0; k < 8; ++k) {
+    const auto point = transform * points[k];
+    for (int l = 0; l < 3; ++l) {
+      new_min[l] = std::min(new_min[l], point[l]);
+      new_max[l] = std::max(new_max[l], point[l]);
+    }
+  }
+
+  return BBox3D(new_min, new_max);
 }
 }  // namespace tenviz

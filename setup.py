@@ -33,7 +33,7 @@ REQUIREMENTS = [
 ]
 
 setup(
-    name='TensorViz',
+    name='tensorviz',
     version='1.0.0',
     author='Otavio Gomes',
     author_email='otavio.b.gomes@gmail.com',

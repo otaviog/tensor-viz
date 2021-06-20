@@ -339,4 +339,5 @@ def create_axis_grid(start, end, steps, show_axis=True, grid_color=None):
                                            [0, 255, 0],
                                            [0, 0, 255]], dtype=torch.uint8))
         scene.append(axis)
+
     return Scene(scene)
