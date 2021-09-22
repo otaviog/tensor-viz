@@ -10,13 +10,13 @@ from tenviz.geometry import Geometry
 
 
 class _PLYType:
-    ply2struct = {'float': 'f', 'int': 'i',
+    ply2struct = {'double': 'd', 'float': 'f', 'int': 'i',
                   'uchar': 'B', 'uint8': 'B',
                   'uint': 'I', 'uint32': 'I', 'uint16': 'H'}
-    ply2py = {'float': float, 'int': int,
+    ply2py = {'double': float, 'float': float, 'int': int,
               'uchar': int, 'uint8': int,
               'uint': int, 'uint32': int, 'uint16': int}
-    ply2np = {'float': np.float32, 'int': np.int32,
+    ply2np = {'double': np.float64, 'float': np.float32, 'int': np.int32,
               'uchar': np.uint8, 'uint8': np.uint8,
               'uint': np.uint32, 'uint32': np.uint32,
               'uint16': np.uint16}

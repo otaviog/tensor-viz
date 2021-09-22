@@ -21,7 +21,7 @@ void Style::Activate() const {
 
   if (alpha_blending) {
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   } else {
     glDisable(GL_BLEND);
   }

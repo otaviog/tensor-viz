@@ -550,7 +550,6 @@ torch::Tensor GLTexture::ToTensorGL() {
   glBindTexture(target_, 0);
   GLCheckError();
 
-  //tex_tensor = torch::flip(tex_tensor, {0});
   return tex_tensor;
 }
 

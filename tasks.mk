@@ -7,6 +7,9 @@ pylint:
 pep8:
 	python -m autopep8 --recursive --in-place tenviz
 
+unit-test:
+	python3 -m unittest discover
+
 doc-create:
 	rm -f doc/source/rflow.*.rst
 	sphinx-apidoc -o doc/source tenviz

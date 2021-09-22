@@ -33,7 +33,7 @@ class Context(_Context):
             height (int): Output image height.
         """
         # pylint: disable=useless-super-delegation
-        super(Context, self).__init__(
+        super().__init__(
             width, height)
 
     def render(self, projection, view, framebuffer,
@@ -61,7 +61,7 @@ class Context(_Context):
 
         """
 
-        return super(Context, self).render(
+        return super().render(
             projection, view, framebuffer,
             _asure_scene(scene), width, height)
 
@@ -80,7 +80,7 @@ class Context(_Context):
         """
         scene = _asure_scene(scene)
 
-        return super(Context, self).viewer(scene, cam_manip)
+        return super().viewer(scene, cam_manip)
 
     def show(self, scene, cam_manip=CameraManipulator.TrackBall):
         """Utility function to show a viewer window without handling key waits.

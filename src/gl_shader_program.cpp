@@ -314,10 +314,9 @@ void GLShaderProgram::SetUniform(const string &name,
     }
 
     auto strides = tensor.strides();
-    // OpenGL matrices are ordered column-wise in memory.      
+    // OpenGL matrices are ordered column-wise in memory.
     GLenum transpose = GL_TRUE;
-    if (strides[0] < strides[1])
-      transpose = GL_FALSE;
+    if (strides[0] < strides[1]) transpose = GL_FALSE;
 
     if (rows == 4 && cols == 4) {
       glUniformMatrix4fv(location, 1, transpose, tensor.data_ptr<float>());

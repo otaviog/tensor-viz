@@ -8,7 +8,7 @@ class Texture(_ctenviz.Texture):
     """
     def __init__(self, tex_target):
         # pylint: disable=useless-super-delegation
-        super(Texture, self).__init__(tex_target)
+        super().__init__(tex_target)
 
     def __str__(self):
         return "{} Texture of width {}, height {} of type {} ".format(

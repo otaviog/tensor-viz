@@ -18,7 +18,7 @@ class Scene(_Scene):
     """
 
     def __init__(self, nodes=None):
-        super(Scene, self).__init__()
+        super().__init__()
         if nodes is not None:
             for node in nodes:
                 self.add(node)
@@ -129,7 +129,7 @@ class PointCloud(DrawProgram):
             point_Size (int): The point size.
         """
 
-        super(PointCloud, self).__init__(
+        super().__init__(
             DrawMode.Points,
             _SHADER_DIR / "point.vert",
             _SHADER_DIR / "point.frag")

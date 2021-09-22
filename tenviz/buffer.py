@@ -39,7 +39,7 @@ class Buffer(_ctenviz.Buffer):
              buffer usage (DYNAMIC, STATIC...).
         """
         # pylint: disable=useless-super-delegation
-        super(Buffer, self).__init__(target, usage)
+        super().__init__(target, usage)
 
     def as_tensor(self):
         """Map the graphics buffer into a Cuda tensor. The returned tensor may
@@ -64,12 +64,12 @@ class Buffer(_ctenviz.Buffer):
 
         """
 
-        return CudaMappedTensorContext(super(Buffer, self).as_tensor())
+        return CudaMappedTensorContext(super().as_tensor())
 
     def as_tensor_(self):
         """Returns a mapped tensor without a context manager. Careful!
         """
-        return super(Buffer, self).as_tensor()
+        return super().as_tensor()
 
 
 def buffer_from_tensor(tensor, target=_ctenviz.BufferTarget.Array,
