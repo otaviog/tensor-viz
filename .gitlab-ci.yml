@@ -6,10 +6,11 @@ stages:
 
 build:images:
   stage: docker-build
-  only: master
+  only: 
+    - master
   script:
     - make -f docker.mk base-build
-    - make -f docker.mk devcontainer
+    - make -f docker.mk dev-build
   tags:
     - docker-shell
 

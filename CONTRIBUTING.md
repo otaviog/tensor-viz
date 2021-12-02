@@ -38,7 +38,7 @@ On the `.devcontainer/devcontainer.json` add some useful configurations:
 		"ms-python.python",
 		"ms-python.vscode-pylance"
 	],
-	
+	"build": { "target": "devcontainer" },
 	"runArgs": [
 		"--gpus", "all",
 		"-e", "XAUTHORITY",
