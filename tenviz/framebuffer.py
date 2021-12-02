@@ -1,6 +1,6 @@
 """Framebuffer functions.
 """
-import tenviz._ctenviz as _ctenviz
+from tenviz import _ctenviz
 
 
 def create_framebuffer(attach_map):

@@ -23,7 +23,7 @@ def read_off(path, nofaces):
     """
     # pylint: disable=too-many-locals
 
-    with open(str(path), 'r') as file:
+    with open(str(path), 'r', encoding="ascii") as file:
         header = file.readline().strip()
         if header != 'OFF':
             raise RuntimeError("File does not start with 'OFF'")

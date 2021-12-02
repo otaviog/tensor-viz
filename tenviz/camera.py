@@ -1,7 +1,7 @@
 """Camera utilities.
 """
 
-import tenviz._ctenviz as _ctenviz
+from tenviz import _ctenviz
 
 
 def get_sphere_view(elevation, azimuth, center, radius, cam_params):

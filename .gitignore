@@ -24,6 +24,7 @@ tenviz.egg-info/
 detect_cuda_version.cc
 detect_cuda_compute_capabilities.cpp
 test_tensorviz_cpp
+.devcontainer
 
 # Windows build
 

@@ -58,7 +58,7 @@ def write_3dobject(path, verts, faces=None, normals=None, colors=None):
     suffix = Path(path).suffix.lower()
     verts = verts.squeeze()
     if suffix == '.off':
-        with open(str(path), 'w') as stream:
+        with open(str(path), 'w', encoding="ascii") as stream:
             write_off(stream, verts, faces)
     elif suffix == '.ply':
         write_ply(str(path), verts, faces, colors, normals)

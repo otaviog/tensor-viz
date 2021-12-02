@@ -3,7 +3,7 @@ the underling Graphics Library (GL). Current TensorViz is based only
 on OpenGL.
 """
 
-import tenviz._ctenviz as _ctenviz
+from tenviz import _ctenviz
 
 
 class CudaMappedTensorContext:
@@ -59,7 +59,7 @@ class Buffer(_ctenviz.Buffer):
                 with gl_buffer.as_tensor() as tensor:
                     tensor[:, 3] = torch.rand(10, 3, torch.dtype=torch.float)
 
-        Returns: 
+        Returns:
             :obj:`CudaMappedTensorContext`: Mapped memory context manager.
 
         """

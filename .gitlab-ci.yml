@@ -1,13 +1,41 @@
-image: "otaviog/tensorviz:ci"
-
-before_script:
-  - pip install -e .
 
 stages:
-  - test
+  - docker-build
+  - build
+  - verification
 
-test:
-  stage: test
+build:images:
+  stage: docker-build
+  only: master
+  script:
+    - make -f docker.mk base-build
+    - make -f docker.mk devcontainer
+  tags:
+    - docker-shell
+
+build:
+  stage: build
+  image: "otaviog/tensorviz-base:latest"
+  script:
+    - pip install -e .
+
+##
+# Verification stage
+linter:
+  before_script:
+    - pip install -e .
+    - pip install -r requirements-dev.txt
+  needs: ["build"]
+  image: "otaviog/tensorviz-base:latest"
+  stage: verification
+  script:
+    - make -f tasks.mk pylint
+
+unit-test:
+  before_script:
+    - pip install -e .
+  needs: ["build"]
+  image: "otaviog/tensorviz-base:latest"
+  stage: verification
   script:
     - make -f unit-tests.mk all
-    - make -f tasks.mk pylint

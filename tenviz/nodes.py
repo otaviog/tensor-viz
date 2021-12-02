@@ -93,6 +93,7 @@ def create_mesh(verts, faces, normals=None, calc_normals=False, texcoords=None):
     mesh['ProjModelview'] = MatPlaceholder.ProjectionModelview
     mesh['NormalModelview'] = MatPlaceholder.NormalModelview
 
+    # pylint: disable=no-member
     mesh.indices.from_tensor(faces)
     mesh.set_bounds(verts)
 
@@ -248,6 +249,7 @@ def create_virtual_camera(proj, extrinsic, color=None, show_axis=True,
     draw['Color'] = color
     draw['ProjModelview'] = MatPlaceholder.ProjectionModelview
 
+    # pylint: disable=no-member
     draw.indices.from_tensor(indices)
     draw.set_bounds(verts)
 
@@ -323,6 +325,7 @@ def create_axis_grid(start, end, steps, show_axis=True, grid_color=None):
     draw['Color'] = grid_color.float()
     draw['ProjModelview'] = MatPlaceholder.ProjectionModelview
 
+    # pylint: disable=no-member
     draw.indices.from_tensor(indices)
 
     draw.set_bounds(xz_grid.view(-1, 3))

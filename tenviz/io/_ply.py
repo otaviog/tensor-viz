@@ -27,7 +27,7 @@ class _PLYType:
             self.py_name = _PLYType.ply2py[type_name]
             self.np_name = _PLYType.ply2np[type_name]
         except KeyError:
-            raise RuntimeError("Unknown ply type: {}".format(type_name))
+            raise RuntimeError("Unknown ply type: {}".format(type_name)) from KeyError
         self.size = struct.calcsize(self.struct)
 
     def __str__(self):
@@ -198,7 +198,7 @@ def read_ply(path, nofaces):
 
 
 def _read_ascii_data(path, start_offset, elements, required_elements):
-    with open(path, 'r') as file:
+    with open(path, 'r', encoding="ascii") as file:
         file.seek(start_offset, 0)
         elem_dict = {}
 
@@ -290,7 +290,7 @@ def write_ply(path, verts, faces, colors, normals):
     """Writes a geometry into a ply file.
 
     """
-    with open(path, 'w') as file:
+    with open(path, 'w', encoding="ascii") as file:
         file.write("ply\n")
         file.write("format binary_little_endian 1.0\n")
         file.write("element vertex {}\n".format(verts.shape[0]))

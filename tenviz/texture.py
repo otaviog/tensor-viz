@@ -1,18 +1,19 @@
 """Texture handling.
 """
-import tenviz._ctenviz as _ctenviz
+from tenviz import _ctenviz
 
 
 class Texture(_ctenviz.Texture):
     """Texture object.
     """
+
     def __init__(self, tex_target):
         # pylint: disable=useless-super-delegation
         super().__init__(tex_target)
 
     def __str__(self):
-        return "{} Texture of width {}, height {} of type {} ".format(
-            self.target, self.width, self.height, self.dtype)
+        return (f"{self.target} Texture of width {self.width}, "
+                f"height {self.height} of type {self.dtype}")
 
     def __repr__(self):
         return str(self)

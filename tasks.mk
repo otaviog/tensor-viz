@@ -30,5 +30,11 @@ cpp-doc-create:
 cpp-doc-open:
 	sensible-browser doc/cpp/html/index.html
 
-local-ci-test:
-	gitlab-runner exec docker test --docker-pull-policy=never
+ci-build-images:
+	gitlab-runner exec shell build:images --docker-pull-policy=never --docker-gpus all
+
+ci-linter:
+	gitlab-runner exec docker linter --docker-pull-policy=never --docker-gpus all
+
+ci-unit-test:
+	gitlab-runner exec docker unit-test --docker-pull-policy=never --docker-gpus all

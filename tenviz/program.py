@@ -1,6 +1,6 @@
 """Function and structures to load a shaders and draw stuff with them.
 """
-import tenviz._ctenviz as _ctenviz
+from tenviz import _ctenviz
 
 
 def load_program_fs(vert_shader=None, frag_shader=None, geo_shader=None):

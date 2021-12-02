@@ -33,11 +33,8 @@ class Geometry:
         self.object_ids = object_ids
 
     def __str__(self):
-        return "verts = {}, faces = {}, colors = {}, normals = {}".format(
-            str(self.verts),
-            str(self.faces),
-            str(self.colors),
-            str(self.normals))
+        return (f"verts = {self.verts}, faces = {self.faces}, "
+                f"colors = {self.colors}, normals = {self.normals}")
 
     def __repr__(self):
         return str(self)

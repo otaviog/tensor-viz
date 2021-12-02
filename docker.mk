@@ -1,11 +1,13 @@
 all:
 	@echo Docker image tasks
 
-dev-build:
-	docker build --target base -t otaviog/tensorviz:base .
-	docker build -t otaviog/tensorviz:dev -f development.dockerfile .
+base-build:
+		docker build -t otaviog/tensorviz-base:latest --target base .
 
-dev-start:
+dev-build:
+	docker build -t otaviog/tensorviz-devcontainer:latest --target devcontainer .
+
+dev-start: dev-build
 	docker run --gpus all --user=`id -u`:`id -g` --env="DISPLAY"\
 		-e NVIDIA_DRIVER_CAPABILITIES=all\
 		-e XAUTHORITY\
@@ -18,7 +20,7 @@ dev-start:
 		-it otaviog/tensorviz:dev /bin/bash
 
 try-build:
-	docker build --target try -t otaviog/tensorviz:try .
+	docker build --target try -t otaviog/tensorviz:latest .
 
-try-push:
-	docker push otaviog/tensorviz:try
+try-push: try-build
+	docker push otaviog/tensorviz:latest

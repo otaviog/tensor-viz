@@ -22,7 +22,7 @@ def read_obj(filepath, nofaces=False):
     faces = []
     norm_faces = []
 
-    with open(str(filepath), 'r') as file:
+    with open(str(filepath), 'r', encoding="ascii") as file:
         for line in _next_line(file):
             line = line.split()
 
