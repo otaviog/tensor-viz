@@ -2,7 +2,10 @@ all:
 	@echo Docker image tasks
 
 base-build:
-		docker build -t otaviog/tensorviz-base:latest --target base .
+	docker build -t otaviog/tensorviz-base:latest --target base .
+
+base-start: base-build
+	docker run -it otaviog/tensorviz-base:latest bash
 
 dev-build:
 	docker build -t otaviog/tensorviz-devcontainer:latest --target devcontainer .

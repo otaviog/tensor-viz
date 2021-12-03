@@ -1,4 +1,4 @@
-FROM nvidia/cudagl:11.2.2-devel-ubuntu20.04 AS base
+FROM nvidia/cudagl:11.2.2-base-ubuntu20.04 AS base
 LABEL maintaner=otavio.b.gomes@gmail.com
 
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt -yq install wget
@@ -10,6 +10,7 @@ ENV PATH="/miniconda3/bin/:${PATH}"
 
 ADD environment.yml /
 RUN conda env update -n base --file environment.yml && rm environment.yml
+RUN conda clean --all -y
 
 ####
 # Devcontainer image
@@ -42,15 +43,33 @@ SHELL ["/bin/bash", "-c"]
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display
 
 #####
-# Trying image
+# Builder image
 ##
-FROM base as try
+FROM base as builder
 
 ADD . /tensorviz
 WORKDIR /tensorviz
-RUN python setup.py install -j2
+RUN python setup.py bdist_wheel 
+
+#####
+# Trying image
+##
+FROM nvidia/cudagl:11.2.2-runtime-ubuntu20.04 AS base
+
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt -yq install wget
+
+WORKDIR /
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.10.3-Linux-x86_64.sh
+RUN bash Miniconda3-py39_4.10.3-Linux-x86_64.sh -b -p /miniconda3 && rm Miniconda3-py39_4.10.3-Linux-x86_64.sh
+ENV PATH="/miniconda3/bin/:${PATH}"
 
 RUN mkdir /exec
 WORKDIR /exec
+
+ADD environment.yml /
+RUN conda env update -n base --file environment.yml && rm environment.yml
+
+COPY from=builder /tensorviz/dist/*.whl
+RUN pip install *.whl && rm *.whl
 
 ENV NVIDIA_DRIVER_CAPABILITIES ${NVIDIA_DRIVER_CAPABILITIES},display

@@ -2,6 +2,7 @@ install_manifest.txt
 doc/build
 doc/source
 doc/cpp
+doc/html
 .devcontainer
 **/__MACOSX
 **/*.*~

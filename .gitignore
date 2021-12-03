@@ -1,6 +1,7 @@
 install_manifest.txt
 _skbuild
 doc/API/
+doc/html
 __MACOSX
 *.*~
 CMakeCache.txt
