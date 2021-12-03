@@ -18,7 +18,7 @@ build:
   stage: build
   image: "otaviog/tensorviz-base:latest"
   script:
-    - python setup.py install
+    - python setup.py develop
   artifacts:
     untracked: true
     expire_in: 1 week
