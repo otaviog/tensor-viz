@@ -20,7 +20,8 @@ RUN rm -r /miniconda3/lib/libcuda* /miniconda3/lib/libcuf* /miniconda3/lib/libcu
 FROM base as devcontainer
 LABEL maintaner=otavio.b.gomes@gmail.com
 
-RUN apt update && DEBIAN_FRONTEND=noninteractive apt -yq install sudo git byobu bash-completion curl
+RUN apt update && DEBIAN_FRONTEND=noninteractive apt -yq install sudo git\
+    byobu bash-completion curl doxygen graphviz
 
 RUN pip install -U pip
 ADD requirements-dev.txt .

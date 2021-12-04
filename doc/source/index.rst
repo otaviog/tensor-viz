@@ -8,6 +8,14 @@ Welcome to TensorViz's documentation!
 
 .. mdinclude:: ../../README.md
 
+C++ API Reference 
+=================
+
+Available `here <cpp/index.html>`_
+
+Python API Reference
+====================
+
 .. toctree::
    :maxdepth: 2
 
