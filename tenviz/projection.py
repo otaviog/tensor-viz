@@ -39,7 +39,8 @@ class Projection:
         aspect (float): aspect ration.
     """
 
-    def __init__(self, left, right, bottom, top, near, far):
+    def __init__(self, left: float, right: float, bottom: float, top: float,
+                 near: float, far: float):
         """Constructs a projection pyramid from near plane and far distance.
         """
         self.left = left
@@ -60,23 +61,22 @@ class Projection:
         self.aspect = (right + abs(left)) / (top + abs(bottom))
 
     @classmethod
-    def perspective(cls, fov_y, near, far, aspect=None, fov_x=None):
+    def perspective(cls, fov_y: float, near: float, far: float,
+                    aspect: float = None, fov_x: float = None):
         """Create a perspective projection.
 
         Args:
 
-            fov (float): field of view angle in degrees.
+            fov: field of view angle in degrees.
 
-            aspect (float): aspect ratio.
+            aspect: aspect ratio.
 
-            near (float): near plane distance.
+            near: near plane distance.
 
-            far (float): far plane distance.
+            far: far plane distance.
 
-        Returns:
-
-            :`obj`:Projection: Projection description. Use
-             :func:`Projection.to_matrix` to get its matrix.
+        Returns: :obj:`Projection`:
+            Projection description. Use :func:`Projection.to_matrix` to get its matrix.
         """
 
         top = math.tan(np.deg2rad(fov_y / 2.0))*near
@@ -90,16 +90,16 @@ class Projection:
         return cls(-right, right, -top, top, near, far)
 
     @classmethod
-    def from_intrinsics(cls, kcam, near, far):
+    def from_intrinsics(cls, kcam: np.ndarray, near: float, far: float):
         """Create a projetion description from a camera intrinsic matrix as
         used in 3D reconstruction.
 
         Args:
-            kcam (:obj:`numpy.ndarray`): 2x3 camera intrinsic matrix.
+            kcam: 2x3 camera intrinsic matrix.
 
-            near (float): near clipping plane distance.
+            near: near clipping plane distance.
 
-            far (float): far clipping plane distance.
+            far: far clipping plane distance.
 
         Returns:
             :obj:`Projection`: Projection parameters.
@@ -111,8 +111,9 @@ class Projection:
         return cls(-right, right, -top, top, near, far)
 
     @classmethod
-    def from_blender_sensor(cls, sensor_w, sensor_h, focal_len, render_w, render_h,
-                            sensor_fit, near, far):
+    def from_blender_sensor(cls, sensor_w: float, sensor_h: float, focal_len: float,
+                            render_w: float, render_h: float,
+                            sensor_fit: str, near: float, far: float):
         """Calculate the projection parameters from Blender's cameras. Useful
         for drawing Pix3D data.
 
@@ -121,14 +122,14 @@ class Projection:
 
         Args:
 
-            sensor_w (float): Sensor width in mm.
-            sensor_h (float): Sensor height in mm.
-            focal_len (float): Camera focal length in mm.
-            render_w (int): Viewport width.
-            render_h (int): Viewport height.
-            sensor_fit (str): 'VERTICAL' or 'HORIZONTAL'.
-            near (float): Near clipping plane distance.
-            far (float): Far clipping plane distance.
+            sensor_w: Sensor width in mm.
+            sensor_h: Sensor height in mm.
+            focal_len: Camera focal length in mm.
+            render_w: Viewport width.
+            render_h: Viewport height.
+            sensor_fit: 'VERTICAL' or 'HORIZONTAL'.
+            near: Near clipping plane distance.
+            far: Far clipping plane distance.
 
         Returns:
             :obj:`Projection`: Projection parameters.
@@ -148,11 +149,11 @@ class Projection:
 
         return cls(-right, right, -top, top, near, far)
 
-    def to_matrix(self):
+    def to_matrix(self) -> np.ndarray:
         """Creates a OpenGL-like projection matrix.
 
         Returns:
-            :obj:`numpy.ndarray`: [4x4] projection matrix.
+            A [4x4] projection matrix.
         """
 
         mtx = np.zeros((4, 4))
@@ -178,7 +179,7 @@ class Projection:
 
         return mtx
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(("Projection(left={}, right={}, bottom={}, top={}, near={}, far={}, "
                     "far_left={}, far_right={}, far_top={}, far_bottom={}, "
                     "fov_x={}, fov_y={}, aspect={})").format(
@@ -186,5 +187,5 @@ class Projection:
                         self.far_left, self.far_right, self.far_top, self.far_bottom,
                         self.fov_x, self.fov_y, self.aspect))
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)

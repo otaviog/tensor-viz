@@ -13,7 +13,7 @@ unit-test:
 doc-create:
 	rm -f doc/source/rflow.*.rst
 	sphinx-apidoc -o doc/source tenviz
-	make -C doc/ html
+	cd doc && sphinx-build -b html source/ html
 
 doc-open:
 	sensible-browser doc/build/html/index.html
@@ -38,3 +38,6 @@ ci-linter:
 
 ci-unit-test:
 	gitlab-runner exec docker unit-test --docker-pull-policy=never --docker-gpus all
+
+ci-pages:
+	gitlab-runner exec docker pages --docker-pull-policy=never --docker-gpus all

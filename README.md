@@ -1,13 +1,10 @@
 # TensorViz: Prototype GLSL shaders with PyTorch
 
-TensorViz is a module designed for prototyping GLSL shaders for
-Computer Vision applications. It is integrated with PyTorch to make
-array/element buffers, framebuffers, or textures easily converted
-to/from tensors to improve testing and debugging.
+TensorViz is a module designed for prototyping GLSL shaders for Computer Vision applications.
+It is integrated with PyTorch to make array/element buffers, framebuffers, or textures easily converted to/from tensors to improve testing and debugging.
+For example, given the following shaders:
 
-For example, given the shaders:
-
-Vertex shader:
+**Vertex shader:**
 
 
 ```glsl
@@ -21,7 +18,7 @@ void main() {
 }
 ```
 
-Fragment shader:
+**Fragment shader:**
 
 ```glsl
 #version 420
@@ -65,15 +62,13 @@ with context.current():
 context.show([program], cam_manip=tenviz.CameraManipulator.WASD)
 ```
 
-More examples on the [samples notebook](doc/Samples.ipynb).
+More examples on the [samples notebook](https://gitlab.com/mipl/3d-reconstruction/tensorviz/-/blob/master/doc/Samples.ipynb).
 
-Key features:
+Current features:
 
-* Directly binding of tensors to shader attributes, uniform or
-  samples;
+* Directly binding of tensors to shader attributes, uniform or samples;
 * Mapping of graphic buffer to Cuda tensor;
-* Automatic reloading shaders. Tensorviz recompile shaders while
-  rendering when a file change happens;
+* Automatic reloading shaders. Tensorviz recompile shaders while rendering when a file change happens;
 * Conversion of texture from and to CUDA;
 * Rendering to framebuffers and tensors.
 
@@ -84,9 +79,9 @@ Demos:
 
 ## Test using Docker
 
-The docker image `otaviog/tensorviz:try` contains all dependencies and
-its python can be invoked using the [`tv-try`](tv-try)
-script. Example:
+The docker image `otaviog/tensorviz:try` contains all dependencies and its python can be invoked using the [`tv-try`](tv-try)
+script.
+Example:
 
 
 ```shell
@@ -95,7 +90,7 @@ tensorviz$ ./tv-try samples/pointcloud.py
 
 ## Installing
 
-Use conda for installing TensorViz.
+The project only supports Conda for installing.
 
 ### Install dependencies by environment update (conda)
 
@@ -108,6 +103,4 @@ tensorviz$ python setup.py install
 
 ## Acknowledgments
 
-This work was supported by the [Eldorado Research
-Institute](https://www.eldorado.org.br/) and the [Machine Intelligence
-and Perception Research](https://gitlab.com/mipl).
+This work was supported by the [Eldorado Research Institute](https://www.eldorado.org.br/) and the [Machine Intelligence and Perception Research](https://gitlab.com/mipl).

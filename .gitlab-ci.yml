@@ -47,3 +47,26 @@ unit-test:
     - make -f unit-tests.mk all
   tags:
     - gpu-container-x11
+
+pages:
+  image: "otaviog/tensorviz-base:latest"
+  stage: deploy
+  script:
+    - pip3 install -r requirements-dev.txt
+    - make -f tasks.mk doc-create
+    - cp -r doc/build/html public
+  artifacts:
+    paths:
+      - public
+  only:
+    - master
+  tags:
+    - container
+
+dockerhub:
+  only: 
+    - master
+  script:
+    - make -f docker.mk try-push
+  tags:
+    - docker-shell
