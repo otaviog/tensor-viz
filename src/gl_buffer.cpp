@@ -238,7 +238,7 @@ void GLBuffer::IndexPut(const torch::Tensor &dst_indices,
     ScopedGLBufferMap gl_map(target_, buffer_id_, GL_WRITE_ONLY);
 
     auto type_id = tensor.options().dtype();
-    AT_DISPATCH_ALL_TYPES(tensor.type(), "CPUIndexPut", ([&] {
+    AT_DISPATCH_ALL_TYPES(tensor.scalar_type(), "CPUIndexPut", ([&] {
                             CPUIndexPut<scalar_t>(dst_indices.cpu(), tensor,
                                                   gl_map.data);
                           }));
@@ -324,7 +324,7 @@ torch::Tensor GLBuffer::IndexSelect(torch::Tensor indices,
     result = torch::empty(result_dims, dtype);
 
     ScopedGLBufferMap glmap(target_, buffer_id_, GL_READ_ONLY);
-    AT_DISPATCH_ALL_TYPES(result.type(), "CPUIndexSelect", ([&] {
+    AT_DISPATCH_ALL_TYPES(result.scalar_type(), "CPUIndexSelect", ([&] {
                             CPUIndexSelect<scalar_t>(
                                 reinterpret_cast<scalar_t *>(glmap.data),
                                 indices, result);

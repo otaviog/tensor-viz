@@ -75,7 +75,7 @@ inline GLenum GetGLInternalFormat(int channels, torch::ScalarType dtype) {
           return GL_RGBA;
       }
     default:
-      assert(false);
+      throw Error("Not possible to convert tensor to texture format");
   }
 }
 
@@ -449,6 +449,8 @@ torch::ScalarType cast_type(CUarray_format format) {
     case CU_AD_FORMAT_FLOAT:
       return torch::kFloat;
       break;
+    default:
+      throw Error("Unsupported CUarray format");
   }
 }
 
