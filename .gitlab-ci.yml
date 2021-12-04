@@ -54,7 +54,7 @@ pages:
   script:
     - pip3 install -r requirements-dev.txt
     - make -f tasks.mk doc-create
-    - cp -r doc/build/html public
+    - cp -r doc/html public
   artifacts:
     paths:
       - public
