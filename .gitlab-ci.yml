@@ -3,6 +3,7 @@ stages:
   - docker-build
   - build
   - verification
+  - deploy
 
 build:images:
   stage: docker-build
@@ -67,6 +68,7 @@ pages:
     - container
 
 dockerhub:
+  stage: deploy
   only: 
     - master
   script:
