@@ -20,10 +20,24 @@ dev-start: dev-build
 		--volume="/etc/sudoers.d:/etc/sudoers.d:ro"\
 		--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw"\
 		--volume=`pwd`:/workspaces/tensorviz\
-		-it otaviog/tensorviz:dev /bin/bash
+		--workdir=/workspaces/tensorviz\
+		-it otaviog/tensorviz-devcontainer:latest /bin/bash
 
 try-build:
 	docker build --target try -t otaviog/tensorviz:latest .
+
+try-start: try-build
+	docker run --gpus all --env="DISPLAY" --user=`id -u`:`id -g`\
+		-e NVIDIA_DRIVER_CAPABILITIES=all\
+		-e XAUTHORITY\
+		--volume="/etc/group:/etc/group:ro"\
+		--volume="/etc/passwd:/etc/passwd:ro"\
+		--volume="/etc/shadow:/etc/shadow:ro"\
+		--volume="/etc/sudoers.d:/etc/sudoers.d:ro"\
+		--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw"\
+		--volume=`pwd`:`pwd`\
+		--workdir=`pwd`\
+		-it otaviog/tensorviz:latest /bin/bash
 
 try-push: try-build
 	docker push otaviog/tensorviz:latest

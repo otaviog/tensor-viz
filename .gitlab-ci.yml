@@ -11,6 +11,7 @@ build:images:
   script:
     - make -f docker.mk base-build
     - make -f docker.mk dev-build
+    - make -f docker.mk try-build
   tags:
     - docker-shell
 
@@ -45,4 +46,4 @@ unit-test:
   script:
     - make -f unit-tests.mk all
   tags:
-    - container-x11
+    - gpu-container-x11
