@@ -17,7 +17,7 @@ class TestProgram(unittest.TestCase):
         """
         context = tenviz.Context()
         with context.current():
-            shader_dir = Path(tenviz.__file__) / "shaders"
+            shader_dir = Path(tenviz.__file__).parent / "shaders"
 
             tenviz.load_program_fs(
                 shader_dir / "phong.vert", shader_dir / "phong.frag")
