@@ -39,7 +39,7 @@ linter:
   script:
     - make -f tasks.mk pylint
   tags:
-    - container
+    - gpu-container
 
 unit-test:
   before_script:
@@ -50,15 +50,19 @@ unit-test:
   script:
     - make -f unit-tests.mk all
   tags:
-    - gpu-container-x11
+    - gpu-container
 
 pages:
   image: "otaviog/tensorviz-base:latest"
   stage: deploy
+  before_script:
+    - apt update && DEBIAN_FRONTEND=noninteractive apt -yq install sudo doxygen graphviz
   script:
     - pip3 install -r requirements-dev.txt
     - make -f tasks.mk doc-create
     - cp -r doc/html public
+    - make -f tasks.mk cpp-doc-create
+    - cp -r doc/cpp/html public/cpp
   artifacts:
     paths:
       - public
