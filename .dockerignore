@@ -39,3 +39,4 @@ docker.mk
 .git
 venv
 env
+.gitlab-ci.yml
