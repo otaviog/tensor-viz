@@ -11,7 +11,7 @@ Welcome to TensorViz's documentation!
 C++ API Reference 
 =================
 
-Available `here <cpp/index.html>`_
+Available `here <cpp/classes.html>`_
 
 Python API Reference
 ====================

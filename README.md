@@ -43,8 +43,8 @@ context = tenviz.Context()
 
 with context.current():
 	program = tenviz.DrawProgram(tenviz.DrawMode.Points,
-								 vert_shader_file="shaders/simple.vert",
-								 frag_shader_file="shaders/simple.frag")
+		vert_shader_file="shaders/simple.vert",
+		frag_shader_file="shaders/simple.frag")
 	# Set vertex attribute
 	# geo.verts is torch tensor
 	program["position"] = geo.verts
@@ -77,10 +77,11 @@ Demos:
 * [shadow-mapping demo](https://github.com/otaviog/shadow-mapping)
 * [hatching demo](https://github.com/otaviog/hatching-shading)
 
-## Test using Docker
+Reference documentation available at https://mipl.gitlab.io/3d-reconstruction/tensorviz/.
 
-The docker image `otaviog/tensorviz:try` contains all dependencies and its python can be invoked using the [`tv-try`](tv-try)
-script.
+## Test using Docker (Linux only)
+
+The docker image `otaviog/tensorviz:latest` contains all dependencies and its python can be invoked using the [`tv-try`](tv-try) script.
 Example:
 
 

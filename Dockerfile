@@ -62,7 +62,6 @@ FROM nvidia/cudagl:11.2.2-runtime-ubuntu20.04 AS try
 COPY --from=base /miniconda3 /miniconda3
 ENV PATH="/miniconda3/bin/:${PATH}"
 
-RUN mkdir /exec
 WORKDIR /exec
 
 COPY --from=builder /tensorviz/dist/*.whl .
