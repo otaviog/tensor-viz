@@ -2,7 +2,8 @@ Sphinx
 sphinx_theme
 sphinx_rtd_theme
 sphinxcontrib-napoleon
-m2r2>=0.3.1
+m2r2==0.3.1
+mistune==0.8.4
 docutils
 pylint
 autopep8
